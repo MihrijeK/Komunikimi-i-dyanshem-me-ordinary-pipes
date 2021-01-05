@@ -27,6 +27,7 @@ Step 4 - Mbyllni skajet e padëshiruara në procesin prind, lexoni fundin e pipe
 Step 5 - Mbyllni skajet e padëshiruara në procesin fëmijë, shkruani në fundin e pipe1 dhe lexoni në fundin e pipe2.
 
 Step 6 - Kryeni komunikimin mes dy proceseve.
+
 ![](Images/OrdinaryPipe.png)
 
 # Ambienti i punës dhe veglat e përdorura
@@ -41,13 +42,17 @@ Gjuha programuese Java
 
 # Komunikimi i dyanshëm në gjuhën programuese C
 Kodi i detyrës përfshinë fillimisht deklarimin e variablave, duke pëfshirë këtu mesazhet që do të shkruhen, variablën ku do të vendoset teksti i lexuar dhe vargjet per pipe1 dhe pipe2 (elementi 0 është për anën e leximit kurse elementi 1 për anën e shkrimit). Në vazhdim bëhet krijimi i pipes me metodën(system call) pipe(). Në rast të moskrijimit të pipe, returnStatus është -1 dhe programi i tregon përdoruesit se ka ndodhur një gabim, në të kundërtën vazhdohet me krijimin e një procesi fëmijë me metodën(system call) fork(). Krijimi i një procesi fëmijë do të mundësojë komunikimin me një proces tjetër, pasi pjesa e kodit poshtë pid=fork() do të ekzekutohet nga të dy proceset njëkohësisht.Nëse pid është 0 kemi të bëjmë me procesin fëmijë të krijuar kshtu që ekzekutohet pjesa e kodit në else, në rast të kundërt kemi të bëjmë me prindin. Edhe prindi, edhe fëmija shkruajnë në pipes përkatëse dhe lexojnë nga to. Procesi prind shkruan në pipe1 dhe lexon nga pipe2, kurse fëmija shkruan në pipe2 dhe lexon nga pipe1 duke arritur kështu komunikim të dyanshëm me ordinary pipes.
+
 ![](Images/C.png)
+
  Rezultati i komunikimit të dyanshëm në gjuhën programuese C
 
 # Komunikimi i dyanshëm në gjuhën programuese Java
 Detyra e njëjtë për arsye eksperimentimi është shkruar edhe në gjuhën programuese Java. Mirëpo me disa koncepte ndryshe duke marrë parasysh që Java nuk mundëson krijimin e një procesi fëmijë nga procesi në ekzekutim. Në këtë rast janë krijuar pipes dhe në mënyrë që të mund të shkruhet dhe të lexohet nga to janë përdorur threads për të imituar punën e proceseve paralele.
 Fillimisht për dallim nga gjuha C pipes për shkrim me lexim krijohen nga PipedOutputStream dhe PipedInputStream respektivisht. Janë krijuar dy nga secila ashtu që të mund të zhvillohet komunikimi i dyanshëm. Instancat outputPipe1 dhe inputPipe1 korrespodojnë me pipe1 në programin në C, kurse outputPipe2 dhe inputPipe2 me pipe2. Në vazhdim janë krijuar 2 threads për të simuluar proceset paralele, ku thread1 paraqet prindin dhe thread2 paraqet fëmijën. Në secilin nga këto threads fillimisht shkruhet me write() dhe pastaj lexohet secili karakter me read(). Ashtu sikurse në programin në C prindi shkruan në pipe 1 dhe lexon në pipe 2, dhe anasjelltas për procesin fëmijë.
+
 ![](Images/java.png)
+
 Rezultati i komunikimit të dyanshëm në gjuhën programuese Java
 
 # Funksionaliteti shtesë
@@ -66,13 +71,19 @@ Ndryshimet në pjesën e printimit në program janë të njejta për procesin pr
 printf("Mesazhi i lexuar nga procesi prind eshte: " );
 reverse(readmessage);
 printf("\n");
+
 ![](Images/reverse.png)
+
 Rezultati i komunikimit të dyanshëm në gjuhën programuese C duke përdorur funksionalitetin shtesë reverse
 
 # Referencat
 
 [1] https://cdynamicprogramming.blogspot.com/p/pipes-in-operating-system.html
+
 [2]https://www.geeksforgeeks.org/pipe-system-call/#:~:text=Conceptually%2C%20a%20pipe%20is%20a,(inter%2Dprocess%20communication).
+
 [3]http://os.ecci.ucr.ac.cr/slides/Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf?fbclid=IwAR3Evz_2cI85mjz37F70VGHbXdbif38ksdIArn9ih_E9l0dZUUGJEeIObKs
+
 [4]http://os.ecci.ucr.ac.cr/slides/Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf
+
 
